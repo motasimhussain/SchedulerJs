@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+	<br>
+	<br>
+	<h1 class="text-center" style="display:inline;">Scheduler</h1><button class="btn btn-success pull-right" id="start">Start!</button>
+	<br>
+	<br>
+	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+		<div class="form-horizontal">
+			<div class="row alert alert-success">
+				<div class="form-group">
+				    <div class="col-sm-12">
+				      	<input type="text" class="form-control" id="procName" placeholder="Process Name">
+					</div>
+				</div>
+				<div class="form-group">
+				    <div class="col-sm-12">
+					    <input type="text" class="form-control" id="startTime" placeholder="Starting Time">
+				    </div>
+				</div>
+				<div class="form-group">
+				    <div class="col-sm-12">
+					    <input type="text" class="form-control" id="serviceTime" placeholder="Service Time">
+				    </div>
+				</div>
+				<div class="form-group">
+				    <div class="col-sm-12">
+					    <select class="form-control" id="choice" placeholder="Choose">
+					    	<option value="" disabled selected>Choose your poison</option>
+					    </select>
+				    </div>
+				</div>
+				<button class="btn btn-primary btn-block" id="add">Add</button>
+			</div>
+		</div>
+
+		<div class="row" id="procPanel">
+			<table class="table table-bordered table-responsive" id="procPanel">
+				<thead>
+					<tr>
+						<th>Process</th>
+						<th>Start</th>
+						<th>Service</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+		<table class="table table-bordered table-responsive" id="output">
+			<thead>
+			
+			</thead>
+			<tbody>
+
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/my.js"></script>
+</body>
+</html>
