@@ -62,42 +62,61 @@ $(function(){
 		$("#procName").val("");
 		$("#startTime").val("");
 		$("#serviceTime").val("");
-
+		$("#procName").focus();
 
 		i++;
 		console.log(arr);
 	});
 
 	// On clicking start
-
+	var servTime = 0;
 	$("#start").click(function(event) {
 
-		servTime = 0;
+		
 		if(arr.length > 0){
 			for (var i = 0; i < arr.length; i++) {
 				servTime += Number(arr[i].serviceTime);
 			};
 
-			for (var i = 0; i <= servTime; i++) {
+			for (var i = 1; i <= servTime; i++) {
 				var row = $('<th>'+ i+'</th>');
 				row.hide();
 				$('#output thead').append(row);
 				row.fadeIn("slow");
 			};
 
-			for (var i = 0; i < arr.length; i++) {
-				var row = $('<tr></tr>');
-				row.hide();
-				$('#output tbody').append(row);
-				row.fadeIn("slow");
-
-				for (var i = 0; i < serviceTime; i++) {
-					
-				};
-			};
+			popRows(arr.length);
 			
 		}
 	});
+
+	var k=0;
+	function popRows(len){
+		setTimeout(function(){
+			if(k<len){
+				var row = $('<tr></tr>');
+				$('#output tbody').append(row);
+				reDisp(servTime,len);
+				
+				k++;
+			}
+
+		},0);
+
+	}
+
+	var j =0;
+	function reDisp(count,len){
+		setTimeout(function(){
+			if(j<count){
+				var row = $('<td>hi</td>');
+				$('#output tr:last').append(row);
+				reDisp(count);
+				j++;
+			}
+		},0);
+		popRows(len);
+	}
 
 	// First Come First Serve
 
