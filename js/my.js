@@ -78,14 +78,16 @@ $(function(){
 				servTime += Number(arr[i].serviceTime);
 			};
 
-			for (var i = 1; i <= servTime; i++) {
-				var row = $('<th>'+ i+'</th>');
-				row.hide();
-				$('#output thead').append(row);
-				row.fadeIn("slow");
-			};
+			// for (var i = 1; i <= servTime; i++) {
+			// 	var row = $('<th>'+ i+'</th>');
+			// 	row.hide();
+			// 	$('#output thead').append(row);
+			// 	row.fadeIn("slow");
+			// };
 
-			popRows(arr.length);
+			// popRows(arr.length);
+
+			$("#output").append(populateTable(null,arr.length,servTime,["p1","p1","","","","","p2","p2"]));
 			
 		}
 	});
@@ -116,6 +118,37 @@ $(function(){
 			}
 		},0);
 		popRows(len);
+	}
+
+
+	function populateTable(table, rows, cells, content) {
+	    if (!table) table = document.createElement('table');
+	    var head = document.createElement('thead');
+	    var row = document.createElement('tr');
+	    for (var i = 0; i < cells; i++) {
+	    	row.appendChild(document.createElement('th'));
+	    	row.cells[i].appendChild(document.createTextNode(i));
+	    };
+
+
+	    head.appendChild(row);
+	    table.appendChild(head);
+
+	    var body = document.createElement('tbody');
+	    table.appendChild(body);
+	    var c = 0;
+	    for (var i = 0; i < rows; ++i) {
+	        var row = document.createElement('tr');
+	        for (var j = 0; j < cells; ++j) {
+	            row.appendChild(document.createElement('td'));
+	            row.cells[j].appendChild(document.createTextNode(content[c]));
+	            c++;
+	        }
+	        body.appendChild(row);
+	    }
+	    table.setAttribute('class', 'table table-bordered');
+
+	    return table;
 	}
 
 	// First Come First Serve
