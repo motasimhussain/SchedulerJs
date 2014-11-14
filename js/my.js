@@ -5,9 +5,21 @@ $(function(){
 
 	// Creating Blue Print
 	var proc = {
+		init:function(){
+			this.name = "";
+			this.startTime = 0;
+			this.servTime = 0;
+			this.counter = 0;
+			this.dat = [];
+			return this;
+		},
+
 		name: "",
 		startTime: 0,
-		serviceTime : 0
+		serviceTime: 0,
+		counter: 0,
+		dat: []
+		
 	}
 
 	var out = {
@@ -30,8 +42,9 @@ $(function(){
 
 	function deQueue () {
 		if (posOut<posIn) {
-			console.log(queue[posOut]);
+			var temp = queue[posOut];
 			posOut++;
+			return temp;
 		}else{
 			console.log("Queue Empty");
 		}
@@ -42,14 +55,15 @@ $(function(){
 
 	$("#add").click(function(event) {
 		// initializing array
-		arr[i] = Object.create(proc);
+
+		arr[i] = Object.create(proc).init();
 
 		$("#procPanel").fadeIn('slow').removeClass("hidden");
 
 		// Getting values and storing them in an array of objects
 		arr[i].name = $("#procName").val();
-		arr[i].startTime = $("#startTime").val();
-		arr[i].serviceTime = $("#serviceTime").val();
+		arr[i].startTime = Number($("#startTime").val());
+		arr[i].serviceTime = Number($("#serviceTime").val());
 
 		//Displaying the Process info in Process Panel  << Also Applying Swag!
 
@@ -71,7 +85,7 @@ $(function(){
 	// On clicking start
 	var servTime = 0;
 	$("#start").click(function(event) {
-
+		$("#formPanel").fadeOut('slow');
 		
 		if(arr.length > 0){
 			for (var i = 0; i < arr.length; i++) {
@@ -87,7 +101,8 @@ $(function(){
 
 			// popRows(arr.length);
 
-			$("#output").append(populateTable(null,arr.length,servTime,["p1","p1","","","","","p2","p2"]));
+			$("#output").append(populateTable(null,arr.length,servTime,firstServe(arr,servTime)));
+			$("#start").addClass('disabled');
 			
 		}
 	});
@@ -140,20 +155,68 @@ $(function(){
 	    for (var i = 0; i < rows; ++i) {
 	        var row = document.createElement('tr');
 	        for (var j = 0; j < cells; ++j) {
-	            row.appendChild(document.createElement('td'));
+	        	var td = document.createElement('td');
+	        	td.setAttribute('class','text-center');
+	            row.appendChild(td);
+
 	            row.cells[j].appendChild(document.createTextNode(content[c]));
 	            c++;
 	        }
 	        body.appendChild(row);
 	    }
-	    table.setAttribute('class', 'table table-bordered');
+	    table.setAttribute('class', 'table table-hover');
 
 	    return table;
 	}
 
 	// First Come First Serve
 
-	function firstServe(){
+	function firstServe(prInfo,tTime){
+		var prFlag = false;
+		var currProc;
 
+		for (var i = 0; i < prInfo.length; i++) {
+			for (var j = 0; j < tTime; j++) {
+				prInfo[i].dat[j] = "-";
+			};
+		}
+
+		for (var i = 0; i < tTime; i++) {
+
+			for (var j = 0; j < prInfo.length; j++) {
+				if(prInfo[j].startTime === i){
+					enQueue(prInfo[j]);
+				}
+			};
+			
+			if(prFlag){
+				currProc.dat[i] = currProc.name;
+				currProc.counter++;
+				if(currProc.serviceTime === currProc.counter){
+					prFlag = false;
+				}
+
+			}else{
+				if(queue.length > 0){
+					currProc = deQueue();
+					prFlag = true;
+					currProc.dat[i] = currProc.name;
+					currProc.counter++;
+					if(currProc.serviceTime === currProc.counter){
+						prFlag = false;
+					}
+				}
+			}
+		};
+		var outArr = [];
+		count = 0;
+		for (var i = 0; i < prInfo.length; i++) {
+			for (var j = 0; j < prInfo[i].dat.length; j++) {
+				outArr[count] = prInfo[i].dat[j];
+				count++;
+			};
+		};
+
+		return outArr;
 	}
 });
