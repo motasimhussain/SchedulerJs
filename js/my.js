@@ -92,16 +92,15 @@ $(function(){
 				servTime += Number(arr[i].serviceTime);
 			};
 
-			// for (var i = 1; i <= servTime; i++) {
-			// 	var row = $('<th>'+ i+'</th>');
-			// 	row.hide();
-			// 	$('#output thead').append(row);
-			// 	row.fadeIn("slow");
-			// };
+///////////////////// Choosing the algo to be applied ////////////////////////////
 
-			// popRows(arr.length);
+			switch($("#choice").val()){
+				case 'ffs':
+					$("#output").append(populateTable(null,arr.length,servTime,firstServe(arr,servTime)));
+				break;
+			}
 
-			$("#output").append(populateTable(null,arr.length,servTime,firstServe(arr,servTime)));
+			
 			$("#start").addClass('disabled');
 			
 		}
