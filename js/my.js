@@ -22,11 +22,7 @@ $(function(){
 		
 	}
 
-	var out = {
-    	name: "",
-    	time: 0
-    };
-
+	/////// Array That Holds the object instances ///////
 	var arr = [];
 
 	// Creating Queue
@@ -51,34 +47,69 @@ $(function(){
 		
 	}
 
-	// On clicking Add
+	var tempStart = 0;
+
+	//////////// On clicking Add  /////////////////
 
 	$("#add").click(function(event) {
 		// initializing array
 
 		arr[i] = Object.create(proc).init();
 
-		$("#procPanel").fadeIn('slow').removeClass("hidden");
+		
 
-		// Getting values and storing them in an array of objects
-		arr[i].name = $("#procName").val();
-		arr[i].startTime = Number($("#startTime").val());
-		arr[i].serviceTime = Number($("#serviceTime").val());
+		// Getting values from form
+		var name= $("#procName").val();
+		var st= $("#startTime").val();
+		var servt= $("#serviceTime").val();
 
-		//Displaying the Process info in Process Panel  << Also Applying Swag!
+		if(name != "" && $.isNumeric(st) && $.isNumeric(servt)){
+			
 
-		var row = $('<tr><td>'+ arr[i].name +'</td><td>'+ arr[i].startTime +'</td><td>'+ arr[i].serviceTime +'</td></tr>');
-		row.hide();
-		$('#procPanel tr:last').after(row);
-		row.fadeIn("slow");
+			if(Number(st) >= tempStart){
+				//Displaying Process Table
+				$("#procPanel").fadeIn('slow').removeClass("hidden");
 
-		//Clearing form after storing values
-		$("#procName").val("");
-		$("#startTime").val("");
-		$("#serviceTime").val("");
-		$("#procName").focus();
+				//Storing process info in array of objects
+				arr[i].name = name;
+				arr[i].startTime = Number(st);
+				arr[i].serviceTime = Number(servt);
 
-		i++;
+				//Displaying the Process info in Process Panel  << Also Applying Swag!
+
+				var row = $('<tr><td>'+ arr[i].name +'</td><td>'+ arr[i].startTime +'</td><td>'+ arr[i].serviceTime +'</td></tr>');
+				row.hide();
+				$('#procPanel tr:last').after(row);
+				row.fadeIn("slow");
+				i++;
+
+				//Clearing form after storing values
+				$("#procName").val("");
+				$("#startTime").val("");
+				$("#serviceTime").val("");
+				//Returning focus to process name
+				$("#procName").focus();
+			
+				//Keeping track of current start time
+				tempStart = Number(st);
+			}else{
+				$('#inpErr').modal();
+			}
+
+			
+		}else{
+			if(name == ""){
+				$("#procName").parent().addClass('has-error');
+			}
+			if(!$.isNumeric(st)){
+				$("#startTime").parent().addClass('has-error');
+			}
+			if(!$.isNumeric(servt)){
+				$("#serviceTime").parent().addClass('has-error');
+			}
+		}
+		
+		
 		console.log(arr);
 	});
 
