@@ -1,6 +1,7 @@
 
 $(function(){
 	$("#procPanel").addClass("hidden");
+	$("#quanta").addClass('hidden');
 	var i=0;
 
 	// Creating Blue Print
@@ -48,6 +49,21 @@ $(function(){
 	}
 
 	var tempStart = 0;
+	var qSize = 1;
+
+	////////// Checkig to see if qunta is needed or not //////////
+	$("#choice").change(function(){
+   		switch($("#choice").val()){
+   			case "rrb":
+   				$("#quanta").fadeIn('slow').removeClass('hidden');
+   				qSize = Number($("#quanta").val());
+   			break;
+   			default:
+   				qSize = 1;
+   				$("#quanta").val("");
+   				$("#quanta").fadeOut('slow');
+   		}
+	});
 
 	//////////// On clicking Add  /////////////////
 
@@ -128,6 +144,12 @@ $(function(){
 			switch($("#choice").val()){
 				case 'ffs':
 					$("#output").append(populateTable(null,arr.length,servTime,firstServe(arr,servTime)));
+				break;
+				case 'rrb':
+					$("#output").append(populateTable(null,arr.length,servTime,roundRobin(arr,servTime,qSize)));
+				break;
+				case 'sf':
+					$("#output").append(populateTable(null,arr.length,servTime,shortestFirst(arr,servTime)));
 				break;
 			}
 
@@ -249,4 +271,141 @@ $(function(){
 
 		return outArr;
 	}
+
+	function roundRobin(prInfo,tTime,qSize){
+		if(!qSize) var qSize = 1;
+
+		var prFlag = false;
+		var currProc;
+
+		for (var i = 0; i < prInfo.length; i++) {
+			for (var j = 0; j < tTime; j++) {
+				prInfo[i].dat[j] = "-";
+			};
+		}
+
+		for (var i = 0; i < tTime; i++) {
+
+			for (var j = 0; j < prInfo.length; j++) {
+				if(prInfo[j].startTime === i){
+					enQueue(prInfo[j]);
+				}
+			};
+			
+			if(prFlag){
+				currProc.dat[i] = currProc.name;
+				currProc.counter++;
+				if(currProc.serviceTime === currProc.counter){
+					prFlag = false;
+				}
+					
+				else if(currProc.counter == qSize){
+					
+				prFlag=false;
+				enQueue(currProc);
+				}					
+			}else{
+				if(queue.length > 0){
+					currProc = deQueue();
+					prFlag = true;
+					currProc.dat[i] = currProc.name;
+					currProc.counter++;
+					if(currProc.serviceTime === currProc.counter){
+						prFlag = false;
+					}
+					//Agar whether we reached the quantum size..Over here this else break will hit only when quantum size is 1
+					else if(currProc.counter == qSize){
+					
+					prFlag=false;
+					enQueue(currProc);
+					}
+				}
+			}
+		};
+		var outArr = [];
+		count = 0;
+		for (var i = 0; i < prInfo.length; i++) {
+			for (var j = 0; j < prInfo[i].dat.length; j++) {
+				outArr[count] = prInfo[i].dat[j];
+				count++;
+			};
+		};
+
+		return outArr;
+	}
+
+	function getShortestProc(){
+	var shorestProcIndex=0;
+	var shorestProcTime=-1;
+	var remainingTime;
+		for (var i = 0; i < queue.length; i++) {
+		
+			remainingTime=queue[i].serviceTime-queue[i].counter;
+			//This "if" is for initializing shorestProcTime to the first value.We can also initialize this outsize for loop
+			if(shorestProcTime==-1){
+				shorestProcTime=remainingTime;
+				shorestProcIndex=i;
+			}
+			else if(remainingTime<shorestProcTime){
+				shorestProcTime=remainingTime;
+				shorestProcIndex=i;
+			}
+		};
+	return shorestProcIndex;
+	}
+
+
+	function shortestFirst(prInfo,tTime){
+		var prFlag = false;
+		var currProc;
+
+		for (var i = 0; i < prInfo.length; i++) {
+			for (var j = 0; j < tTime; j++) {
+				prInfo[i].dat[j] = "-";
+			};
+		}
+
+		for (var i = 0; i < tTime; i++) {
+
+			for (var j = 0; j < prInfo.length; j++) {
+				if(prInfo[j].startTime === i){
+					enQueue(prInfo[j]);
+				}
+			};
+			
+			if(prFlag){
+				currProc.dat[i] = currProc.name;
+				currProc.counter++;
+				if(currProc.serviceTime === currProc.counter){
+					prFlag = false;
+				}
+					
+					
+			}else{
+				if(queue.length > 0){
+				
+					currProc = queue[getShortestProc()];
+					prFlag = true;
+					currProc.dat[i] = currProc.name;
+					currProc.counter++;
+					if(currProc.serviceTime === currProc.counter){
+						prFlag = false;
+					}
+
+				}
+			}
+		};
+		var outArr = [];
+		count = 0;
+		for (var i = 0; i < prInfo.length; i++) {
+			for (var j = 0; j < prInfo[i].dat.length; j++) {
+				outArr[count] = prInfo[i].dat[j];
+				count++;
+			};
+		};
+
+		return outArr;
+	}
+	
+
 });
