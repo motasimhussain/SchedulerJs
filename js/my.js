@@ -339,16 +339,17 @@ $(function(){
 	var shorestProcTime=-1;
 	var remainingTime;
 		for (var i = 0; i < queue.length; i++) {
-		
-			remainingTime=queue[i].serviceTime-queue[i].counter;
-			//This "if" is for initializing shorestProcTime to the first value.We can also initialize this outsize for loop
-			if(shorestProcTime==-1){
-				shorestProcTime=remainingTime;
-				shorestProcIndex=i;
-			}
-			else if(remainingTime<shorestProcTime){
-				shorestProcTime=remainingTime;
-				shorestProcIndex=i;
+			if(queue[i].counter!=-1){
+				remainingTime=queue[i].serviceTime-queue[i].counter;
+				//This "if" is for initializing shorestProcTime to the first value.We can also initialize this outsize for loop
+				if(shorestProcTime==-1){
+					shorestProcTime=remainingTime;
+					shorestProcIndex=i;
+				}
+				else if(remainingTime<shorestProcTime){
+					shorestProcTime=remainingTime;
+					shorestProcIndex=i;
+				}
 			}
 		};
 	return shorestProcIndex;
@@ -378,18 +379,78 @@ $(function(){
 				currProc.counter++;
 				if(currProc.serviceTime === currProc.counter){
 					prFlag = false;
+					currProc.counter=-1;
 				}
 					
 					
 			}else{
 				if(queue.length > 0){
-				
-					currProc = queue[getShortestProc()];
-					prFlag = true;
-					currProc.dat[i] = currProc.name;
-					currProc.counter++;
-					if(currProc.serviceTime === currProc.counter){
-						prFlag = false;
+					index=getShortestProc();
+					if(index!=-1){
+						currProc = queue[index];
+						prFlag = true;
+						currProc.dat[i] = currProc.name;
+						currProc.counter++;
+						if(currProc.serviceTime === currProc.counter){
+							currProc.counter=-1;
+							prFlag = false;
+						}
+					}
+
+				}
+			}
+		};
+		var outArr = [];
+		count = 0;
+		for (var i = 0; i < prInfo.length; i++) {
+			for (var j = 0; j < prInfo[i].dat.length; j++) {
+				outArr[count] = prInfo[i].dat[j];
+				count++;
+			};
+		};
+
+		return outArr;
+	}
+		function shortestTimeRemaining(prInfo,tTime){
+		var prFlag = false;
+		var currProc;
+
+		for (var i = 0; i < prInfo.length; i++) {
+			for (var j = 0; j < tTime; j++) {
+				prInfo[i].dat[j] = "-";
+			};
+		}
+
+		for (var i = 0; i < tTime; i++) {
+
+			for (var j = 0; j < prInfo.length; j++) {
+				if(prInfo[j].startTime === i){
+					enQueue(prInfo[j]);
+					prFlag=false;
+				}
+			};
+			
+			if(prFlag){
+				currProc.dat[i] = currProc.name;
+				currProc.counter++;
+				if(currProc.serviceTime === currProc.counter){
+					prFlag = false;
+					currProc.counter=-1;
+				}
+					
+					
+			}else{
+				if(queue.length > 0){
+					index=getShortestProc();
+					if(index!=-1){
+						currProc = queue[index];
+						prFlag = true;
+						currProc.dat[i] = currProc.name;
+						currProc.counter++;
+						if(currProc.serviceTime === currProc.counter){
+							currProc.counter=-1;
+							prFlag = false;
+						}
 					}
 
 				}
