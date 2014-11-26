@@ -277,7 +277,6 @@ $(function(){
 	}
 
 	function roundRobin(prInfo,tTime,qSize){
-		if(!qSize) var qSize = 1;
 
 		var prFlag = false;
 		var currProc;
