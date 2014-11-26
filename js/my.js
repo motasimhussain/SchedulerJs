@@ -151,6 +151,10 @@ $(function(){
 				case 'sf':
 					$("#output").append(populateTable(null,arr.length,servTime,shortestFirst(arr,servTime)));
 				break;
+				case 'str':
+					$("#output").append(populateTable(null,arr.length,servTime,shortestTimeRemaining(arr,servTime)));
+				break;				
+				
 			}
 
 			
