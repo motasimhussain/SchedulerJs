@@ -59,7 +59,7 @@ $(function(){
    		switch($("#choice").val()){
    			case "rrb":
    				$("#quanta").fadeIn('slow').removeClass('hidden');
-   				qSize = Number($("#quanta").val());
+   				
    			break;
    			default:
    				qSize = 1;
@@ -136,6 +136,7 @@ $(function(){
 	var servTime = 0;
 ////////////////////////// On clicking start ////////////////////////////////////
 	$("#start").click(function(event) {
+		qSize = Number($("#quanta").val());
 		$("#formPanel").fadeOut('slow');
 		$("#output").fadeIn('slow');
 		
