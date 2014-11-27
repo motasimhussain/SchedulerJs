@@ -3,6 +3,7 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/custom.css">
 </head>
 <body>
 
@@ -37,9 +38,9 @@
 	</div>
 	<br>
 	<br>
-	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+	<div class="col-md-3 col-lg-3">
 		<div class="form-horizontal" id="formPanel">
-			<div class="row alert alert-success">
+			<div class="row well">
 				<div class="form-group">
 				    <div class="col-sm-12">
 				      	<input type="text" class="form-control" id="procName" placeholder="Process Name" >
@@ -60,7 +61,7 @@
 			</div>
 		</div>
 
-		<div class="row" id="procPanel">
+		<div class="row well" id="procPanel">
 			<table class="table table-bordered table-responsive" id="procPanel">
 				<thead>
 					<tr>
@@ -76,7 +77,7 @@
 			<button class="btn btn-default btn-block" onclick="location.reload()">Reset</button>
 		</div>
 	</div>
-	<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" id="output">
+	<div class="col-md-9 col-lg-9 well" id="output">
 		<!-- <table class="table table-bordered table-responsive" id="output">
 			<thead>
 			

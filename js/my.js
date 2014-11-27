@@ -2,6 +2,7 @@
 $(function(){
 	$("#procPanel").addClass("hidden");
 	$("#quanta").addClass('hidden');
+	$("#output").hide();
 	var i=0;
 
 	// Creating Blue Print
@@ -129,10 +130,12 @@ $(function(){
 		console.log(arr);
 	});
 
-	// On clicking start
+	
 	var servTime = 0;
+////////////////////////// On clicking start ////////////////////////////////////
 	$("#start").click(function(event) {
 		$("#formPanel").fadeOut('slow');
+		$("#output").fadeIn('slow');
 		
 		if(arr.length > 0){
 			for (var i = 0; i < arr.length; i++) {
