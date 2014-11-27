@@ -12,6 +12,7 @@ $(function(){
 			this.startTime = 0;
 			this.servTime = 0;
 			this.counter = 0;
+			this.watingTIme=0;
 			this.dat = [];
 			return this;
 		},
@@ -20,6 +21,7 @@ $(function(){
 		startTime: 0,
 		serviceTime: 0,
 		counter: 0,
+		watingTIme:0,
 		dat: []
 		
 	}
@@ -474,5 +476,100 @@ $(function(){
 		return outArr;
 	}
 	
+		function highestResponse(prInfo,tTime){
+		var prFlag = false;
+		var currProc;
 
+		for (var i = 0; i < prInfo.length; i++) {
+			for (var j = 0; j < tTime; j++) {
+				prInfo[i].dat[j] = "-";
+			};
+		}
+
+		for (var i = 0; i < tTime; i++) {
+
+			for (var j = 0; j < prInfo.length; j++) {
+				if(prInfo[j].startTime === i){
+					enQueue(prInfo[j]);
+					
+				}
+			};
+			
+			if(prFlag){
+				currProc.dat[i] = currProc.name;
+				currProc.counter++;
+				if(currProc.serviceTime === currProc.counter){
+					prFlag=false;
+					currProc.counter=-1;
+				}
+				for(k=0;k<queue.length;k++){
+					if(queue[k].name != currProc.name){
+						if(queue[k].counter!=-1){	
+						queue[k].waitingTime++;
+						}
+					}
+						
+				}				
+					
+					
+			}
+			else{
+				if(queue.length > 0){
+					index=getHighestResponse();
+					if(index!=-1){
+						currProc = queue[index];
+						prFlag = true;
+						currProc.dat[i] = currProc.name;
+						currProc.counter++;
+						if(currProc.serviceTime === currProc.counter){
+							currProc.counter=-1;
+							prFlag = false;
+						}
+						//Here we have to increase the waiting time of other processes in queue by 1
+						
+						for(k=0;k<queue.length;k++){
+							if(queue[k].name != currProc.name){
+								if(queue[k].counter!=-1){	
+									queue[k].waitingTime++;
+								}
+							}
+						
+						}
+						
+					}
+
+				}
+			}
+		};
+		var outArr = [];
+		count = 0;
+		for (var i = 0; i < prInfo.length; i++) {
+			for (var j = 0; j < prInfo[i].dat.length; j++) {
+				outArr[count] = prInfo[i].dat[j];
+				count++;
+			};
+		};
+
+		return outArr;
+	}
+		function getHighestResponse(){
+	var shorestProcIndex=0;
+	var shorestProcTime=-1;
+	var remainingTime;
+		for (var i = 0; i < queue.length; i++) {
+			if(queue[i].counter!=-1){
+				remainingTime=parseFloat((queue[i].waitingTime+queue[i].serviceTime)/queue[i].serviceTime);
+				//This "if" is for initializing shorestProcTime to the first value.We can also initialize this outsize for loop
+				if(shorestProcTime==-1){
+					shorestProcTime=remainingTime;
+					shorestProcIndex=i;
+				}
+				else if(remainingTime>shorestProcTime){
+					shorestProcTime=remainingTime;
+					shorestProcIndex=i;
+				}
+			}
+		};
+	return shorestProcIndex;
+	}
 });
