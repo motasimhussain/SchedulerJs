@@ -316,34 +316,36 @@ $(function(){
 		var currProc;
 
 		for (var i = 0; i < prInfo.length; i++) {
-			for (var j = 0; j < tTime; j++) {
+			for (var j = 0; j <= tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i < tTime; i++) {
+		for (var i = 0; i <= tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
 					enQueue(prInfo[j]);
 				}
 			};
+			if(i!=0){
 			
-			if(prFlag){
-				currProc.dat[i] = currProc.name;
-				currProc.counter++;
-				if(currProc.serviceTime === currProc.counter){
-					prFlag = false;
-				}
-
-			}else{
-				if(queue.length > 0){
-					currProc = deQueue();
-					prFlag = true;
+				if(prFlag){
 					currProc.dat[i] = currProc.name;
 					currProc.counter++;
 					if(currProc.serviceTime === currProc.counter){
 						prFlag = false;
+					}
+
+				}else{
+					if(queue.length > 0){
+						currProc = deQueue();
+						prFlag = true;
+						currProc.dat[i] = currProc.name;
+						currProc.counter++;
+						if(currProc.serviceTime === currProc.counter){
+							prFlag = false;
+						}
 					}
 				}
 			}
@@ -366,12 +368,12 @@ $(function(){
 		var currProc;
 		var num=0;// for quantum size chking
 		for (var i = 0; i < prInfo.length; i++) {
-			for (var j = 0; j < tTime; j++) {
+			for (var j = 0; j <= tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i < tTime; i++) {
+		for (var i = 0; i <= tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
@@ -458,12 +460,12 @@ $(function(){
 		var currProc;
 
 		for (var i = 0; i < prInfo.length; i++) {
-			for (var j = 0; j < tTime; j++) {
+			for (var j = 0; j <= tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i < tTime; i++) {
+		for (var i = 0; i <= tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
@@ -471,29 +473,31 @@ $(function(){
 				}
 			};
 			
-			if(prFlag){
-				currProc.dat[i] = currProc.name;
-				currProc.counter++;
-				if(currProc.serviceTime === currProc.counter){
-					prFlag = false;
-					currProc.counter=-1;
-				}
-					
-					
-			}else{
-				if(queue.length > 0){
-					index=getShortestProc();
-					if(index!=-1){
-						currProc = queue[index];
-						prFlag = true;
-						currProc.dat[i] = currProc.name;
-						currProc.counter++;
-						if(currProc.serviceTime === currProc.counter){
-							currProc.counter=-1;
-							prFlag = false;
-						}
+			if(i!=0){
+				if(prFlag){
+					currProc.dat[i] = currProc.name;
+					currProc.counter++;
+					if(currProc.serviceTime === currProc.counter){
+						prFlag = false;
+						currProc.counter=-1;
 					}
+						
+						
+				}else{
+					if(queue.length > 0){
+						index=getShortestProc();
+						if(index!=-1){
+							currProc = queue[index];
+							prFlag = true;
+							currProc.dat[i] = currProc.name;
+							currProc.counter++;
+							if(currProc.serviceTime === currProc.counter){
+								currProc.counter=-1;
+								prFlag = false;
+							}
+						}
 
+					}
 				}
 			}
 		};
@@ -513,12 +517,12 @@ $(function(){
 		var currProc;
 
 		for (var i = 0; i < prInfo.length; i++) {
-			for (var j = 0; j < tTime; j++) {
+			for (var j = 0; j <= tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i < tTime; i++) {
+		for (var i = 0; i <= tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
@@ -526,30 +530,32 @@ $(function(){
 					prFlag=false;
 				}
 			};
+			if(i!=0){
 			
-			if(prFlag){
-				currProc.dat[i] = currProc.name;
-				currProc.counter++;
-				if(currProc.serviceTime === currProc.counter){
-					prFlag = false;
-					currProc.counter=-1;
-				}
-					
-					
-			}else{
-				if(queue.length > 0){
-					index=getShortestProc();
-					if(index!=-1){
-						currProc = queue[index];
-						prFlag = true;
-						currProc.dat[i] = currProc.name;
-						currProc.counter++;
-						if(currProc.serviceTime === currProc.counter){
-							currProc.counter=-1;
-							prFlag = false;
-						}
+				if(prFlag){
+					currProc.dat[i] = currProc.name;
+					currProc.counter++;
+					if(currProc.serviceTime === currProc.counter){
+						prFlag = false;
+						currProc.counter=-1;
 					}
+						
+						
+				}else{
+					if(queue.length > 0){
+						index=getShortestProc();
+						if(index!=-1){
+							currProc = queue[index];
+							prFlag = true;
+							currProc.dat[i] = currProc.name;
+							currProc.counter++;
+							if(currProc.serviceTime === currProc.counter){
+								currProc.counter=-1;
+								prFlag = false;
+							}
+						}
 
+					}
 				}
 			}
 		};
@@ -570,12 +576,12 @@ $(function(){
 		var currProc;
 
 		for (var i = 0; i < prInfo.length; i++) {
-			for (var j = 0; j < tTime; j++) {
+			for (var j = 0; j <= tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i < tTime; i++) {
+		for (var i = 0; i <= tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
@@ -583,50 +589,52 @@ $(function(){
 					
 				}
 			};
+			if(i!=0){
 			
-			if(prFlag){
-				currProc.dat[i] = currProc.name;
-				currProc.counter++;
-				if(currProc.serviceTime === currProc.counter){
-					prFlag=false;
-					currProc.counter=-1;
-				}
-				for(k=0;k<queue.length;k++){
-					if(queue[k].name != currProc.name){
-						if(queue[k].counter!=-1){	
-						queue[k].waitingTime++;
-						}
+				if(prFlag){
+					currProc.dat[i] = currProc.name;
+					currProc.counter++;
+					if(currProc.serviceTime === currProc.counter){
+						prFlag=false;
+						currProc.counter=-1;
 					}
-						
-				}				
-					
-					
-			}
-			else{
-				if(queue.length > 0){
-					index=getHighestResponse();
-					if(index!=-1){
-						currProc = queue[index];
-						prFlag = true;
-						currProc.dat[i] = currProc.name;
-						currProc.counter++;
-						if(currProc.serviceTime === currProc.counter){
-							currProc.counter=-1;
-							prFlag = false;
-						}
-						//Here we have to increase the waiting time of other processes in queue by 1
-						
-						for(k=0;k<queue.length;k++){
-							if(queue[k].name != currProc.name){
-								if(queue[k].counter!=-1){	
-									queue[k].waitingTime++;
-								}
+					for(k=0;k<queue.length;k++){
+						if(queue[k].name != currProc.name){
+							if(queue[k].counter!=-1){	
+							queue[k].waitingTime++;
 							}
-						
 						}
+							
+					}				
 						
-					}
+						
+				}
+				else{
+					if(queue.length > 0){
+						index=getHighestResponse();
+						if(index!=-1){
+							currProc = queue[index];
+							prFlag = true;
+							currProc.dat[i] = currProc.name;
+							currProc.counter++;
+							if(currProc.serviceTime === currProc.counter){
+								currProc.counter=-1;
+								prFlag = false;
+							}
+							//Here we have to increase the waiting time of other processes in queue by 1
+							
+							for(k=0;k<queue.length;k++){
+								if(queue[k].name != currProc.name){
+									if(queue[k].counter!=-1){	
+										queue[k].waitingTime++;
+									}
+								}
+							
+							}
+							
+						}
 
+					}
 				}
 			}
 		};
