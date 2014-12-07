@@ -234,7 +234,9 @@ $(function(){
 				case 'str':
 					$("#output").append(populateTable(null,arr.length,servTime,shortestTimeRemaining(arr,servTime)));
 				break;
-					
+				case 'hrr':
+					$("#output").append(populateTable(null,arr.length,servTime,highestResponse(arr,servTime)));
+				break;						
 				case 'fb':
 					$("#output").append(populateTable(null,arr.length,servTime,feedBack(arr,servTime)));
 				break;					
