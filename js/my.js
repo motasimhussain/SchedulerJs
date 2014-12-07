@@ -12,7 +12,7 @@ $(function(){
 			this.startTime = 0;
 			this.servTime = 0;
 			this.counter = 0;
-			this.watingTIme=0;
+			this.waitingTime=0;
 			this.dat = [];
 			return this;
 		},
@@ -22,7 +22,7 @@ $(function(){
 		serviceTime: 0,
 		counter: 0,
 		queueNumber:1,
-		watingTIme:0,
+		waitingTime:0,
 		dat: []
 		
 	}
@@ -600,7 +600,7 @@ $(function(){
 						prFlag=false;
 						currProc.counter=-1;
 					}
-					for(k=0;k<queue.length;k++){
+					for(k=0;k<getLenQueue();k++){
 						if(queue[k].name != currProc.name){
 							if(queue[k].counter!=-1){	
 							queue[k].waitingTime++;
@@ -625,7 +625,7 @@ $(function(){
 							}
 							//Here we have to increase the waiting time of other processes in queue by 1
 							
-							for(k=0;k<queue.length;k++){
+							for(k=0;k<getLenQueue();k++){
 								if(queue[k].name != currProc.name){
 									if(queue[k].counter!=-1){	
 										queue[k].waitingTime++;
@@ -655,7 +655,7 @@ $(function(){
 	var shorestProcIndex=0;
 	var shorestProcTime=-1;
 	var remainingTime;
-		for (var i = 0; i < queue.length; i++) {
+		for (var i = 0; i < getLenQueue(); i++) {
 			if(queue[i].counter!=-1){
 				remainingTime=parseFloat((queue[i].waitingTime+queue[i].serviceTime)/queue[i].serviceTime);
 				//This "if" is for initializing shorestProcTime to the first value.We can also initialize this outsize for loop
