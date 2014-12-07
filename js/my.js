@@ -51,6 +51,62 @@ $(function(){
 		
 	}
 
+	var queue1 = [];
+	function enQueue1 (a) {
+		queue1[posIn] = a;
+		posIn++; 		
+	}
+
+	function deQueue1 () {
+		if (posOut<posIn) {
+			var temp = queue1[posOut];
+			posOut++;
+			return {
+				temp:this.temp,
+				len:this.posIn-this.posOut
+			}
+		}else{
+			console.log("Queue Empty");
+		}
+		
+	}
+
+	var queue2 = [];
+	function enQueue2 (a) {
+		queue2[posIn] = a;
+		posIn++; 		
+	}
+
+	function deQueue2 () {
+		if (posOut<posIn) {
+			var temp = queue2[posOut];
+			posOut++;
+			return temp;
+		}else{
+			console.log("Queue Empty");
+		}
+		
+	}
+
+
+	var queue3 = [];
+function enQueue3 (a) {
+		queue3[posIn] = a;
+		posIn++; 		
+	}
+
+	function deQueue3 () {
+		if (posOut<posIn) {
+			var temp = queue3[posOut];
+			posOut++;
+			return temp;
+		}else{
+			console.log("Queue Empty");
+		}
+		
+	}
+
+
 	var tempStart = 0;
 	var qSize = 1;
 
@@ -184,7 +240,7 @@ $(function(){
 
 	}
 
-	var j =0;
+	var j =1;
 	function reDisp(count,len){
 		setTimeout(function(){
 			if(j<count){
@@ -202,7 +258,7 @@ $(function(){
 	    if (!table) table = document.createElement('table');
 	    var head = document.createElement('thead');
 	    var row = document.createElement('tr');
-	    for (var i = 0; i < cells; i++) {
+	    for (var i = 0; i <= cells; i++) {
 	    	row.appendChild(document.createElement('th'));
 	    	row.cells[i].appendChild(document.createTextNode(i));
 	    };
@@ -216,7 +272,7 @@ $(function(){
 	    var c = 0;
 	    for (var i = 0; i < rows; ++i) {
 	        var row = document.createElement('tr');
-	        for (var j = 0; j < cells; ++j) {
+	        for (var j = 0; j <= cells; ++j) {
 	        	var td = document.createElement('td');
 	        	td.setAttribute('class','text-center');
 	            row.appendChild(td);
@@ -237,13 +293,13 @@ $(function(){
 		var prFlag = false;
 		var currProc;
 
-		for (var i = 0; i < prInfo.length; i++) {
-			for (var j = 0; j < tTime; j++) {
+		for (var i = 0; i <= prInfo.length; i++) {
+			for (var j = 0; j <= tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i < tTime; i++) {
+		for (var i = 0; i <= tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
@@ -286,47 +342,57 @@ $(function(){
 
 		var prFlag = false;
 		var currProc;
-
+		var num=0;// for quantum size chking
 		for (var i = 0; i < prInfo.length; i++) {
-			for (var j = 0; j < tTime; j++) {
+			for (var j = 0; j <= tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i < tTime; i++) {
+		for (var i = 0; i <= tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
 					enQueue(prInfo[j]);
 				}
 			};
+			if(i!=0){
 			
-			if(prFlag){
-				currProc.dat[i] = currProc.name;
-				currProc.counter++;
-				if(currProc.serviceTime === currProc.counter){
-					prFlag = false;
-				}
-					
-				else if(currProc.counter == qSize){
-					
-				prFlag=false;
-				enQueue(currProc);
-				}					
-			}else{
-				if(queue.length > 0){
-					currProc = deQueue();
-					prFlag = true;
+			
+				if(prFlag){
 					currProc.dat[i] = currProc.name;
 					currProc.counter++;
+					num++;
 					if(currProc.serviceTime === currProc.counter){
 						prFlag = false;
+						num=0;
 					}
-					//Agar whether we reached the quantum size..Over here this else break will hit only when quantum size is 1
-					else if(currProc.counter == qSize){
-					
+						
+					else if(num == qSize){
+						
 					prFlag=false;
+					num=0;
 					enQueue(currProc);
+					}					
+				}
+				else{
+					if(queue.length > 0){
+						currProc = deQueue();
+						prFlag = true;
+						currProc.dat[i] = currProc.name;
+						currProc.counter++;
+						num++;
+						if(currProc.serviceTime === currProc.counter){
+							prFlag = false;
+							num=0;
+						}
+						//Agar whether we reached the quantum size..Over here this else break will hit only when quantum size is 1
+						else if(num == qSize){
+						
+						prFlag=false;
+						num=0;
+						enQueue(currProc);
+						}
 					}
 				}
 			}
@@ -370,12 +436,12 @@ $(function(){
 		var currProc;
 
 		for (var i = 0; i < prInfo.length; i++) {
-			for (var j = 0; j < tTime; j++) {
+			for (var j = 0; j <= tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i < tTime; i++) {
+		for (var i = 0; i <= tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
@@ -425,12 +491,12 @@ $(function(){
 		var currProc;
 
 		for (var i = 0; i < prInfo.length; i++) {
-			for (var j = 0; j < tTime; j++) {
+			for (var j = 0; j <= tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i < tTime; i++) {
+		for (var i = 0; i <= tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
@@ -482,12 +548,12 @@ $(function(){
 		var currProc;
 
 		for (var i = 0; i < prInfo.length; i++) {
-			for (var j = 0; j < tTime; j++) {
+			for (var j = 0; j <= tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i < tTime; i++) {
+		for (var i = 0; i <= tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
@@ -572,5 +638,79 @@ $(function(){
 			}
 		};
 	return shorestProcIndex;
+	}
+
+
+
+
+	function feedBack(prInfo,tTime,qSize){
+
+		var prFlag = false;
+		var currProc;
+		var num=0;// for quantum size chking
+		for (var i = 0; i < prInfo.length; i++) {
+			for (var j = 0; j <= tTime; j++) {
+				prInfo[i].dat[j] = "-";
+			};
+		}
+
+		for (var i = 0; i <= tTime; i++) {
+
+			for (var j = 0; j < prInfo.length; j++) {
+				if(prInfo[j].startTime === i){
+					enQueue(prInfo[j]);
+				}
+			};
+			if(i!=0){
+			
+			
+				if(prFlag){
+					currProc.dat[i] = currProc.name;
+					currProc.counter++;
+					num++;
+					if(currProc.serviceTime === currProc.counter){
+						prFlag = false;
+						num=0;
+					}
+						
+					else if(num == qSize){
+						
+					prFlag=false;
+					num=0;
+					enQueue(currProc);
+					}					
+				}
+				else{
+					if(queue.length > 0){
+						currProc = deQueue();
+						prFlag = true;
+						currProc.dat[i] = currProc.name;
+						currProc.counter++;
+						num++;
+						if(currProc.serviceTime === currProc.counter){
+							prFlag = false;
+							num=0;
+						}
+						//Agar whether we reached the quantum size..Over here this else break will hit only when quantum size is 1
+						else if(num == qSize){
+						
+						prFlag=false;
+						num=0;
+						enQueue(currProc);
+						}
+					}
+				}
+			}
+		};
+		var outArr = [];
+		count = 0;
+		for (var i = 0; i < prInfo.length; i++) {
+			for (var j = 0; j < prInfo[i].dat.length; j++) {
+				outArr[count] = prInfo[i].dat[j];
+				count++;
+			};
+		};
+
+		return outArr;
 	}
 });
