@@ -21,6 +21,7 @@ $(function(){
 		startTime: 0,
 		serviceTime: 0,
 		counter: 0,
+		queueNumber:1,
 		watingTIme:0,
 		dat: []
 		
@@ -31,10 +32,17 @@ $(function(){
 
 	// Creating Queue
 
-	var queue = [];
+	
 	var posOut = 0;
+	var posOut1 = 0;
+	var posOut2 = 0;
+	var posOut3 = 0;
+	
 	var posIn = 0;
-
+	var posIn1 = 0;
+	var posIn2 = 0;
+	var posIn3 = 0;
+	var queue = [];
 	function enQueue (a) {
 		queue[posIn] = a;
 		posIn++; 		
@@ -50,62 +58,72 @@ $(function(){
 		}
 		
 	}
-
+	function getLenQueue(){
+	return (posIn-posOut);
+	}
 	var queue1 = [];
 	function enQueue1 (a) {
-		queue1[posIn] = a;
-		posIn++; 		
+		queue1[posIn1] = a;
+		posIn1++; 		
 	}
 
 	function deQueue1 () {
-		if (posOut<posIn) {
-			var temp = queue1[posOut];
-			posOut++;
-			return {
-				temp:this.temp,
-				len:this.posIn-this.posOut
-			}
-		}else{
-			console.log("Queue Empty");
-		}
-		
-	}
-
-	var queue2 = [];
-	function enQueue2 (a) {
-		queue2[posIn] = a;
-		posIn++; 		
-	}
-
-	function deQueue2 () {
-		if (posOut<posIn) {
-			var temp = queue2[posOut];
-			posOut++;
+		if (posOut1<posIn1) {
+			var temp = queue1[posOut1];
+			posOut1++;
 			return temp;
 		}else{
-			console.log("Queue Empty");
+			console.log("Queue 1 Empty");
 		}
 		
 	}
-
-
+	
+	function getLenQueue1(){
+	return ((posIn1)-(posOut1));
+	}
+	var queue2 = [];
+	function enQueue2 (a) {
+		queue2[posIn2] = a;
+		posIn2++; 		
+	}
+	
+	
+	function deQueue2 () {
+		if (posOut2<posIn2) {
+			var temp = queue2[posOut2];
+			posOut2++;
+			return temp;
+		}else{
+			console.log("Queue 2 Empty");
+		}
+		
+	}
+	
+	
+	function getLenQueue2(){
+	return ((posIn2)-(posOut2));
+	}	
 	var queue3 = [];
-function enQueue3 (a) {
-		queue3[posIn] = a;
-		posIn++; 		
+	function enQueue3 (a) {
+		queue3[posIn3] = a;
+		posIn3++; 		
 	}
 
 	function deQueue3 () {
-		if (posOut<posIn) {
-			var temp = queue3[posOut];
-			posOut++;
+		if (posOut3<posIn3) {
+			var temp = queue3[posOut3];
+			posOut3++;
 			return temp;
 		}else{
-			console.log("Queue Empty");
+			console.log("Queue 3 Empty");
 		}
 		
 	}
-
+	function getLenQueue3(){
+	return ((posIn3)-(posOut3));
+	}
+	
+	
 
 	var tempStart = 0;
 	var qSize = 1;
@@ -215,7 +233,11 @@ function enQueue3 (a) {
 				break;
 				case 'str':
 					$("#output").append(populateTable(null,arr.length,servTime,shortestTimeRemaining(arr,servTime)));
-				break;				
+				break;
+					
+				case 'fb':
+					$("#output").append(populateTable(null,arr.length,servTime,feedBack(arr,servTime)));
+				break;					
 				
 			}
 
@@ -240,7 +262,7 @@ function enQueue3 (a) {
 
 	}
 
-	var j =1;
+	var j =0;
 	function reDisp(count,len){
 		setTimeout(function(){
 			if(j<count){
@@ -293,13 +315,13 @@ function enQueue3 (a) {
 		var prFlag = false;
 		var currProc;
 
-		for (var i = 0; i <= prInfo.length; i++) {
-			for (var j = 0; j <= tTime; j++) {
+		for (var i = 0; i < prInfo.length; i++) {
+			for (var j = 0; j < tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i <= tTime; i++) {
+		for (var i = 0; i < tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
@@ -344,12 +366,12 @@ function enQueue3 (a) {
 		var currProc;
 		var num=0;// for quantum size chking
 		for (var i = 0; i < prInfo.length; i++) {
-			for (var j = 0; j <= tTime; j++) {
+			for (var j = 0; j < tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i <= tTime; i++) {
+		for (var i = 0; i < tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
@@ -436,12 +458,12 @@ function enQueue3 (a) {
 		var currProc;
 
 		for (var i = 0; i < prInfo.length; i++) {
-			for (var j = 0; j <= tTime; j++) {
+			for (var j = 0; j < tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i <= tTime; i++) {
+		for (var i = 0; i < tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
@@ -491,12 +513,12 @@ function enQueue3 (a) {
 		var currProc;
 
 		for (var i = 0; i < prInfo.length; i++) {
-			for (var j = 0; j <= tTime; j++) {
+			for (var j = 0; j < tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i <= tTime; i++) {
+		for (var i = 0; i < tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
@@ -548,12 +570,12 @@ function enQueue3 (a) {
 		var currProc;
 
 		for (var i = 0; i < prInfo.length; i++) {
-			for (var j = 0; j <= tTime; j++) {
+			for (var j = 0; j < tTime; j++) {
 				prInfo[i].dat[j] = "-";
 			};
 		}
 
-		for (var i = 0; i <= tTime; i++) {
+		for (var i = 0; i < tTime; i++) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
@@ -619,7 +641,7 @@ function enQueue3 (a) {
 
 		return outArr;
 	}
-		function getHighestResponse(){
+	function getHighestResponse(){
 	var shorestProcIndex=0;
 	var shorestProcTime=-1;
 	var remainingTime;
@@ -639,11 +661,9 @@ function enQueue3 (a) {
 		};
 	return shorestProcIndex;
 	}
-
-
-
-
-	function feedBack(prInfo,tTime,qSize){
+	
+	
+		function feedBack(prInfo,tTime){
 
 		var prFlag = false;
 		var currProc;
@@ -658,7 +678,7 @@ function enQueue3 (a) {
 
 			for (var j = 0; j < prInfo.length; j++) {
 				if(prInfo[j].startTime === i){
-					enQueue(prInfo[j]);
+					enQueue1(prInfo[j]);
 				}
 			};
 			if(i!=0){
@@ -677,12 +697,12 @@ function enQueue3 (a) {
 						
 					prFlag=false;
 					num=0;
-					enQueue(currProc);
+					insertProc(currProc);
 					}					
 				}
 				else{
-					if(queue.length > 0){
-						currProc = deQueue();
+					
+						currProc = getProc();
 						prFlag = true;
 						currProc.dat[i] = currProc.name;
 						currProc.counter++;
@@ -696,9 +716,9 @@ function enQueue3 (a) {
 						
 						prFlag=false;
 						num=0;
-						enQueue(currProc);
+						insertProc(currProc);
 						}
-					}
+					
 				}
 			}
 		};
@@ -713,4 +733,49 @@ function enQueue3 (a) {
 
 		return outArr;
 	}
+	
+	function getProc(){
+	var tmpProc;
+		if(getLenQueue1() > 0){
+			tmpProc=deQueue1();
+			qSize=1;
+			tmpProc.queueNumber++;
+		}
+		
+		else if(getLenQueue2() > 0){
+			tmpProc=deQueue2();
+			qSize=2;
+			tmpProc.queueNumber++;
+		}
+		
+		else if(getLenQueue3() >0 ){
+			tmpProc= deQueue3();
+			qSize=4;
+			tmpProc.queueNumber=1;
+		}
+	
+	return tmpProc;
+	}
+	
+	function insertProc(tmpProc){
+		
+		if(tmpProc.queueNumber==1){
+			enQueue1(tmpProc);
+		}
+		
+		else if(tmpProc.queueNumber==2){
+			enQueue2(tmpProc);
+		}
+		
+		else if(tmpProc.queueNumber==3){
+			enQueue3(tmpProc);
+		}
+	
+	}
+	
+	
+	
+	
+	
+	
 });
