@@ -1,4 +1,4 @@
-
+									/*UI Design and IO By Motasim Hussain, Algorithms By Usman Shaheen*/
 $(function(){
 	$("#procPanel").addClass("hidden");
 	$("#quanta").addClass('hidden');

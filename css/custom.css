@@ -7,6 +7,6 @@ body {
 }
 
 .well {
-	background-color: rgba(221,221,221,0.8);
-   /*background-color: rgba(245, 245, 245, 0.7);*/
+	/*background-color: rgba(221,221,221,0.8);*/
+   background-color: rgba(245, 245, 245, 0.9);
 }
